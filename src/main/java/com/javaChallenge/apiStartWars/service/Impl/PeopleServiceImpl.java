@@ -10,7 +10,9 @@ import com.javaChallenge.apiStartWars.clients.StarWars.StarwarsClient;
 import com.javaChallenge.apiStartWars.clients.StarWars.response.people.PeopleResponse;
 import com.javaChallenge.apiStartWars.dto.result.ResultPeopleDTO;
 import com.javaChallenge.apiStartWars.dto.result.ResultPeopleNameDTO;
+import com.javaChallenge.apiStartWars.exception.StarwarsNotFoundException;
 import com.javaChallenge.apiStartWars.service.PeopleService;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +26,15 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Override
     public Page<ResultDTO> getAllPeople(Pageable pageable) {
-         PeopleResponse peopleResponse = starwarsClient.getAllResponsePeople();
-         return new PeopleDTO(peopleResponse,pageable).getResults();
+        PeopleResponse peopleResponse = null;
+
+        try {
+            peopleResponse = starwarsClient.getAllResponsePeople();
+        } catch (FeignException.NotFound  e) {
+            throw new StarwarsNotFoundException("Error al consultar la api");
+        }
+
+        return new PeopleDTO(peopleResponse,pageable).getResults();
     }
 
     @Override

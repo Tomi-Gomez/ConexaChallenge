@@ -9,8 +9,11 @@ import com.javaChallenge.apiStartWars.dto.result.ResultDTO;
 import com.javaChallenge.apiStartWars.dto.planets.StarshipsDTO;
 import com.javaChallenge.apiStartWars.dto.result.ResultStarshipNameDTO;
 import com.javaChallenge.apiStartWars.dto.result.ResultStarshipsDTO;
+import com.javaChallenge.apiStartWars.exception.StarwarsNotFoundException;
 import com.javaChallenge.apiStartWars.service.StarshipsService;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,14 @@ public class StarshipsServiceImpl implements StarshipsService {
     private StarwarsClient starwarsClient;
 
     public Page<ResultDTO> getAllStarships(Pageable pageable){
-        StarshipsResponse starshipsResponse = starwarsClient.getAllResponseStarships();
+        StarshipsResponse starshipsResponse;
+
+        try {
+            starshipsResponse = starwarsClient.getAllResponseStarships();
+        } catch (FeignException.NotFound e) {
+            throw new StarwarsNotFoundException("Error al consultar la api");
+        }
+
         return new StarshipsDTO(starshipsResponse, pageable).getResults();
     }
 

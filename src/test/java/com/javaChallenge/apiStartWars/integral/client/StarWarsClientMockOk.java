@@ -12,9 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class StarWarsClientMock extends WireMockServer {
+public class StarWarsClientMockOk extends WireMockServer {
 
-    public StarWarsClientMock (final int port){
+    public StarWarsClientMockOk(final int port){
         super(port);
     }
 
@@ -34,6 +34,8 @@ public class StarWarsClientMock extends WireMockServer {
         );
 
     }
+
+
 
     public void starWarsMockServerStarship() throws IOException {
         this.start();

@@ -1,6 +1,6 @@
 package com.javaChallenge.apiStartWars.integral.controller;
 
-import com.javaChallenge.apiStartWars.integral.client.StarWarsClientMock;
+import com.javaChallenge.apiStartWars.integral.client.StarWarsClientMockOk;
 import com.javaChallenge.apiStartWars.security.JwtUtil;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.AfterAll;
@@ -21,19 +21,19 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class VehiclesControllerTest {
 
 
-    private final StarWarsClientMock starWarsClientMock = new StarWarsClientMock(8089);
+    private final StarWarsClientMockOk starWarsClientMockOk = new StarWarsClientMockOk(8089);
 
     @Autowired
     private JwtUtil jwtUtil;
 
     @BeforeAll
     public void initialize() throws IOException {
-        starWarsClientMock.starWarsMockServerVehicles();
+        starWarsClientMockOk.starWarsMockServerVehicles();
     }
 
     @AfterAll
     public void finishMock(){
-        starWarsClientMock.stop();
+        starWarsClientMockOk.stop();
     }
 
     @Test

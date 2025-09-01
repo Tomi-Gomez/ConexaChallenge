@@ -12,7 +12,9 @@ import com.javaChallenge.apiStartWars.dto.result.ResultVehiclesDTO;
 import com.javaChallenge.apiStartWars.dto.result.ResultVehiclesNameDTO;
 import com.javaChallenge.apiStartWars.dto.vehicles.VehiclesDTO;
 import com.javaChallenge.apiStartWars.dto.vehicles.VehiclesIdDTO;
+import com.javaChallenge.apiStartWars.exception.StarwarsNotFoundException;
 import com.javaChallenge.apiStartWars.service.VehiclesService;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +30,15 @@ public class VehiclesServiceImpl implements VehiclesService {
 
     @Override
     public Page<ResultDTO> getAllVehicles(Pageable pageable) {
-        VehiclesResponse vehiclesResponse = starwarsClient.getAllResponseVehicles();
+        VehiclesResponse vehiclesResponse;
+
+        try {
+            vehiclesResponse = starwarsClient.getAllResponseVehicles()
+            ;
+        } catch (FeignException.NotFound  e) {
+            throw new StarwarsNotFoundException("Error al consultar la api");
+        }
+
         return new VehiclesDTO(vehiclesResponse,pageable).getResults();
     }
 
