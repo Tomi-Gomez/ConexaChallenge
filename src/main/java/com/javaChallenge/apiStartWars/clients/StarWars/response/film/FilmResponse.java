@@ -16,6 +16,6 @@ public class FilmResponse {
     @JsonProperty("message")
     private String message;
 
-    @JsonProperty("resultDTO")
+    @JsonProperty("result")
     private List<ResultFilmResponse> results;
 }

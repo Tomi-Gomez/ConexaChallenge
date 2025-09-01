@@ -24,7 +24,7 @@ public class StarWarsClientMock extends WireMockServer {
         final String starWarsPeopleClient = new String(Files.readAllBytes(resource.toPath()));
 
         this.stubFor(
-                WireMock.post(WireMock.urlPathMatching("/api/people/"))
+                WireMock.get(WireMock.urlPathMatching("/api/people/"))
                         .willReturn(
                                 WireMock.aResponse()
                                         .withStatus(HttpStatus.OK.value())
@@ -41,7 +41,7 @@ public class StarWarsClientMock extends WireMockServer {
         final String starWarsPeopleClient = new String(Files.readAllBytes(resource.toPath()));
 
         this.stubFor(
-                WireMock.post(WireMock.urlPathMatching("/api/starships"))
+                WireMock.get(WireMock.urlPathMatching("/api/starships/"))
                         .willReturn(
                                 WireMock.aResponse()
                                         .withStatus(HttpStatus.OK.value())
@@ -58,7 +58,7 @@ public class StarWarsClientMock extends WireMockServer {
         final String starWarsPeopleClient = new String(Files.readAllBytes(resource.toPath()));
 
         this.stubFor(
-                WireMock.post(WireMock.urlPathMatching("/api/vehicles"))
+                WireMock.get(WireMock.urlPathMatching("/api/vehicles/"))
                         .willReturn(
                                 WireMock.aResponse()
                                         .withStatus(HttpStatus.OK.value())
@@ -74,7 +74,7 @@ public class StarWarsClientMock extends WireMockServer {
         final String starWarsPeopleClient = new String(Files.readAllBytes(resource.toPath()));
 
         this.stubFor(
-                WireMock.post(WireMock.urlPathMatching("/api/films"))
+                WireMock.get(WireMock.urlPathMatching("/api/films/"))
                         .willReturn(
                                 WireMock.aResponse()
                                         .withStatus(HttpStatus.OK.value())

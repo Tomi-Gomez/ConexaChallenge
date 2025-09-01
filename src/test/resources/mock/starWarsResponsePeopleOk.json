@@ -1,12 +1,12 @@
 {
-  "message": "ok",
+  "message": "pepepepepe",
   "total_records": 82,
   "total_pages": 9,
   "previous": null,
   "next": "https://www.swapi.tech/api/people?page=2&limit=10",
   "results": [
     {
-      "uid": "1",
+      "uid": "123",
       "name": "Luke Skywalker",
       "url": "https://www.swapi.tech/api/people/1"
     },

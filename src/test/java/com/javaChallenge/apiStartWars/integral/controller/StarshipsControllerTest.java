@@ -4,6 +4,7 @@ package com.javaChallenge.apiStartWars.integral.controller;
 import com.javaChallenge.apiStartWars.integral.client.StarWarsClientMock;
 import com.javaChallenge.apiStartWars.security.JwtUtil;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,7 +21,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StarshipsControllerTest {
 
-    private final StarWarsClientMock starWarsClientMock = new StarWarsClientMock(8090);
+    private final StarWarsClientMock starWarsClientMock = new StarWarsClientMock(8089);
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -30,8 +31,13 @@ public class StarshipsControllerTest {
         starWarsClientMock.starWarsMockServerStarship();
     }
 
+    @AfterAll
+    public void finishMock(){
+        starWarsClientMock.stop();
+    }
+
     @Test
-    public void validatePeopleJson() {
+    public void starshipsControllerTestOk() {
         String token = jwtUtil.generateToken("testuser", "USER");
 
         given()

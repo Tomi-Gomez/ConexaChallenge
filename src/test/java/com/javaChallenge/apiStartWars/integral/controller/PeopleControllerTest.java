@@ -3,6 +3,7 @@ package com.javaChallenge.apiStartWars.integral.controller;
 import com.javaChallenge.apiStartWars.integral.client.StarWarsClientMock;
 import com.javaChallenge.apiStartWars.security.JwtUtil;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -28,8 +29,13 @@ public class PeopleControllerTest {
         starWarsClientMock.starWarsMockServerPeople();
     }
 
+    @AfterAll
+    public void finishMock(){
+        starWarsClientMock.stop();
+    }
+
     @Test
-    public void validatePeopleJson() {
+    public void peopleControllerTestOk() {
         String token = jwtUtil.generateToken("testuser", "USER");
 
         given()
@@ -38,6 +44,7 @@ public class PeopleControllerTest {
                 .when()
                 .get("/api/v1/people/")
                 .then()
+                .log().all()
                 .statusCode(200)
                 .body("content", not(empty()))
                 .body("content.uid", everyItem(notNullValue()))

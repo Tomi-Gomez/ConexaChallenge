@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "starwars",url = "https://www.swapi.tech")
+@FeignClient(name = "starwars",url = "${starWars.client}")
 public interface StarwarsClient {
     @GetMapping("/api/people/")
     public PeopleResponse getAllResponsePeople();
